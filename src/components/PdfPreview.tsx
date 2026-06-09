@@ -21,7 +21,7 @@ function CodeBlock({ children, className }: { children?: React.ReactNode; classN
   return <code className={className}>{children}</code>;
 }
 
-function A4Page({ content, index, padding }: { content: string; index: number; padding?: string }) {
+function A4Page({ content, padding }: { content: string; padding?: string }) {
   const ref = useRef<HTMLDivElement>(null);
 
   return (
@@ -54,7 +54,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({ markdownText }) => {
           {i > 0 && (
             <div className="page-break-indicator">── 페이지 구분 ──</div>
           )}
-          <A4Page content={page.content} index={i} padding={page.padding} />
+          <A4Page content={page.content} padding={page.padding} />
         </React.Fragment>
       ))}
     </div>
