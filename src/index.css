@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── 전역 폰트 ── */
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+
+/* ── 코드블럭 prose 기본 스타일 제거 ── */
+.prose pre,
+.prose-sm pre {
+  border: 1px solid #e5e7eb !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 4px !important;
+}
+
+.prose pre code,
+.prose-sm pre code {
+  color: #374151 !important;
+}
+
+/* ── 화면에서 보이는 프리뷰 스타일 ── */
+@media screen {
+  .preview-container {
+    background-color: #d1d5db;
+    padding: 24px;
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  .a4-page {
+    background: white;
+    width: 210mm;
+    height: 297mm;
+    min-height: unset;
+    padding: 20mm 25mm;
+    margin: 0 auto 16px auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+    overflow: hidden;
+    page-break-after: always;
+    position: relative;
+  }
+
+  .a4-page-overflow {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, rgba(255, 0, 0, 0.08));
+    pointer-events: none;
+  }
+
+  .page-break-indicator {
+    width: 210mm;
+    margin: 0 auto 8px auto;
+    border-top: 2px dashed #3b82f6;
+    text-align: center;
+    color: #3b82f6;
+    font-size: 12px;
+    padding-top: 4px;
+  }
+}
+
+/* ── 인쇄 시 스타일 (PDF 출력용) ── */
+@media print {
+  /* 용지 크기 A4 고정, 브라우저 URL·날짜·페이지번호 여백 제거 */
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  /* visibility로 숨김: display:none과 달리 자식에서 visible로 덮어쓸 수 있음 */
+  body * {
+    visibility: hidden;
+  }
+
+  .preview-container,
+  .preview-container * {
+    visibility: visible;
+  }
+
+  /* absolute로 좌상단에 겹쳐서 렌더링 */
+  .preview-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 210mm;
+    padding: 0;
+    margin: 0;
+    background: white;
+  }
+
+  /* 각 A4 카드 = 정확히 PDF 1페이지 */
+  .a4-page {
+    width: 210mm;
+    height: 297mm;
+    min-height: unset;
+    padding: 20mm 25mm;
+    margin: 0;
+    box-shadow: none;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: white;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  /* 마지막 페이지 뒤 빈 페이지 방지 */
+  .a4-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  h1, h2, h3, h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  table, pre, img, figure, blockquote {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  pre, pre > div, code {
+    white-space: pre-wrap !important;
+    word-break: break-all !important;
+    overflow-x: visible !important;
+  }
+
+  .page-break-indicator {
+    display: none;
+  }
+}
